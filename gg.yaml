@@ -1,1 +1,8 @@
-test
+---
+- name: test awx
+  hosts: work1
+  tasks:
+  - name: install something
+    apt:
+      name: vim
+      state: latest
