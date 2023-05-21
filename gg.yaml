@@ -1,6 +1,6 @@
 ---
 - name: test awx
-  hosts: work1
+  hosts: 192.168.35.126
   tasks:
   - name: install something
     apt:
