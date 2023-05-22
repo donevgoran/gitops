@@ -14,11 +14,12 @@ jobs:
       # check this thread to understand why its needed:
       # https://stackoverflow.com/a/70447517
       run: |
-        sudo apt install openssh-client -y
-        ssh-add <(echo "${{ vars.SSH_KEYS }}")
-        mkdir -p ~/.ssh
-        [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+         mkdir -p ~/.ssh/
+         echo "${{ vars.SSH_KEYS }}" > ~/.ssh/private.key
+         sudo chmod 600 ~/.ssh/private.key
+         echo "nms.radixcloud.com" > ~/.ssh/known_hosts
+       shell: bash
     - name: connect and pull
-      run: ssh radix@nms.radixcloud.com "ls"
+      run: ssh -i ~/.ssh/private.key radix@nms.radixcloud.com "ls"
     - name: cleanup
       run: rm -rf ~/.ssh
