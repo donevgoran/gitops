@@ -11,12 +11,11 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          host='nms.radixcloud.com'
-          hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-          ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
- 
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
+          chmod 600 ~/.ssh/private.key
+          ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" radix@nms.radixcloud.com "whoami"
+      
       - name: connect and pull
         run: ssh radix@nms.radixcloud.com "touch githubcicd"
       - name: cleanup
