@@ -2,28 +2,22 @@ on:
   push:
     branches:
       - main
-        
+  workflow_dispatch:
+  
 jobs:
-  build:
+  run_pull:
+    name: run pull
     runs-on: ubuntu-latest
-    #container:
-    #  image: donevgoran/ubuntu-cicd
+    
     steps:
-      - name: test
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: radix
-          SSH_KEY: ${{ vars.SSH_KEYS }}
-          SSH_HOST: nms.radixcloud.com
-      - name:
-        run: ssh staging 'pwd'
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ vars.SSH_KEYS }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ vars.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: connect and pull
+      run: ssh radix@${{ vars.SSH_HOST }} "ls"
+    - name: cleanup
+      run: rm -rf ~/.ssh
