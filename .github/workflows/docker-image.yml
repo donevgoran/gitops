@@ -10,4 +10,4 @@ jobs:
     #  image: donevgoran/ubuntu-cicd
     steps:
       - name: test
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}"
+        run: echo "${{ vars.SSH_KEYS }}"
