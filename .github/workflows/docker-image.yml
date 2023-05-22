@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: centos-latest
     steps:
       - name: Create SSH key
         run: |
-          sudo apt update -y 
-          sudo apt install openssh-client rsync -y
+          sudo yum update -y 
+          sudo yum install openssh-client rsync -y
           eval $(ssh-agent -s)
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
           mkdir -p ~/.ssh
