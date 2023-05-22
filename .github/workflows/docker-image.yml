@@ -1,19 +1,28 @@
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-  
-jobs:
-  run_pull:
-    name: run pull
-    runs-on: ubuntu-latest
-    
-    steps:
-      - run: sudo apt install libssl-dev -y
-      - run: mkdir -p ~/.ssh/
-      - run: echo $SSH_PRIVATE_KEY > ~/.ssh/private.key
-      - run: cat ~/.ssh/private.key
-      - run: chmod 600 ~/.ssh/private.key
-      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" radix@nms.radixcloud.com whoami
+name: CI
 
+on:
+    push:
+        branches: main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: Add SSH key
+              env:
+                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+              run: |
+                  mkdir -p /home/runner/.ssh
+                  # Replace example.com with the hostname of the machine
+                  # you're SSH-ing into
+                  ssh-keyscan example.com >> /home/runner/.ssh/known_hosts
+                  # DOKKU_SSH_KEY is the name of the repository secret
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
+                  chmod 600 /home/runner/.ssh/github_actions
+                  ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
+                  ssh-add /home/runner/.ssh/github_actions
+                  ssh radix@nms.radixcloud.com "ls"
+
+         
