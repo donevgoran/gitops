@@ -25,3 +25,5 @@ jobs:
           SSH_USER: radix
           SSH_KEY: ${{ vars.SSH_KEYS }}
           SSH_HOST: nms.radixcloud.com
+      - name:
+        run: cat ~/.ssh/staging.key
