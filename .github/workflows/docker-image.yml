@@ -11,7 +11,7 @@ jobs:
         steps:
 
             - name: Add SSH key
-              uses: donevgoran/ubuntu-cicd
+              uses: donevgoran/ubuntu-cicd@latest
               with:
                 host: nms.radixcloud.com
                 username: radix
