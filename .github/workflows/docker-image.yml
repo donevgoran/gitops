@@ -15,4 +15,5 @@ jobs:
         host='nms.radixcloud.com'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+        cat ~/.ssh/id_rsa
     - run: ssh radix@nms.radixcloud.com 'pwd' 
