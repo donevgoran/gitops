@@ -17,7 +17,5 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo {%- raw -%} "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H nms.radixcloud.com > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh radix@nms.radixcloud.com "ls && exit"
-    - name: cleanup
-      run: rm -rf ~/.ssh
+        ssh radix@nms.radixcloud.com "ls && exit"
+
