@@ -10,4 +10,18 @@ jobs:
     #  image: donevgoran/ubuntu-cicd
     steps:
       - name: test
-        run: echo "${{ vars.SSH_KEYS }}"
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: radix
+          SSH_KEY: ${{ vars.SSH_KEYS }}
+          SSH_HOST: nms.radixcloud.com
