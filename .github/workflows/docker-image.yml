@@ -13,5 +13,5 @@ jobs:
       - run: mkdir -p ~/.ssh/
       - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
-      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" radix@nms.radixcloud.clm whoami
+      - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" radix@nms.radixcloud.com whoami
 
