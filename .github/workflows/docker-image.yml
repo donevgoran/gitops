@@ -11,7 +11,7 @@ jobs:
     steps:
     - run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ env.SSH_HOST }}" > ~/test
+        echo "goran" > ~/test
         host='nms.radixcloud.com'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
