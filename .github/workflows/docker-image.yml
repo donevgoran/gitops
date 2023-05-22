@@ -1,23 +1,24 @@
-name: CI
-
 on:
-    push:
-        branches: main
-
-jobs:
-    build:
-        runs-on: ubuntu-latest
-
-        steps:
-
-            - name: Add SSH key
-              uses: donevgoran/ubuntu-cicd@latest
-              with:
-                host: nms.radixcloud.com
-                username: radix
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                script: |
-                            ls
- 
-
-         
+  push:
+    branches:
+      - main
+        
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName nms.radixcloud.com
+            User radix
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Build and Run App
+        run: ssh staging 'ls'
