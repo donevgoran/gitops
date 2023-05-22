@@ -11,6 +11,7 @@ jobs:
           sudo apt update -y 
           sudo apt install openssh-client rsync -y
           eval $(ssh-agent -s)
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -t rsa nms.radixcloud.com >> ~/.ssh/known_hosts
