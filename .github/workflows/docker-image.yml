@@ -9,4 +9,5 @@ jobs:
     #container:
     #  image: donevgoran/ubuntu-cicd
     steps:
-      - run: echo "var1: ${{ vars.SSH_KEYS }}"
+      - name: test
+        run: echo "var1: ${{ vars.SSH_KEYS }}"
