@@ -9,8 +9,10 @@ jobs:
     container:
       image: donevgoran/ubuntu-cicd
     steps:
-    - run: eval $(ssh-agent -s)
-    - run: ssh-add <(echo "${{ secrets.SSH_PRIVATE_KEY }}")
-    - run: mkdir -p ~/.ssh
-    - run: '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - run: ssh radix@nms.radixcloud.com 'ls'
+    - run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        host='nms.radixcloud.com'
+        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+    - run: ssh radix@nms.radixcloud.com 'pwd' 
