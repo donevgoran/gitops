@@ -26,4 +26,4 @@ jobs:
           SSH_KEY: ${{ vars.SSH_KEYS }}
           SSH_HOST: nms.radixcloud.com
       - name:
-        run: ssh radix@nms.radixcloud.com 'pwd'
+        run: ssh staging 'pwd'
