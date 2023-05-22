@@ -14,8 +14,7 @@ jobs:
           chmod 700 ~/.ssh
           ssh-keyscan -t rsa nms.radixcloud.com >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-      - name: connect and pull
-        run: ssh radix@nms.radixcloud.com "ls"
+          ssh radix@nms.radixcloud.com "ls"
       - name: cleanup
         run: rm -rf ~/.ssh
       
