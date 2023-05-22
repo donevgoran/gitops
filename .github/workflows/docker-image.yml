@@ -10,7 +10,7 @@ jobs:
       image: donevgoran/ubuntu-cicd
     steps:
     - run: eval $(ssh-agent -s)
-    - run: ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - run: ssh-add <(echo "${{ SSH_PRIVATE_KEY }}")
     - run: mkdir -p ~/.ssh
     - run: '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     - run: ssh radix@nms.radixcloud.com 'ls'
