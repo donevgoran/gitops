@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: sudo apt install libssl-dev -y
       - run: mkdir -p ~/.ssh/
-      - run: echo "${{ SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
+      - run: echo $SSH_PRIVATE_KEY > ~/.ssh/private.key
       - run: cat ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
       - run: ssh -i ~/.ssh/private.key -o "StrictHostKeyChecking no" radix@nms.radixcloud.com whoami
