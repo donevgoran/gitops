@@ -9,6 +9,7 @@ jobs:
     #container:
     #  image: donevgoran/ubuntu-cicd
     steps:
+      - run: echo "var1: ${{ vars.SSH_KEYS }}"
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
