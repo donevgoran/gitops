@@ -18,6 +18,6 @@ jobs:
         echo "${{ vars.SSH_KEYS }}" > ~/.ssh/id_rsa
         ssh-keyscan -H nms.radixcloud.com > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh radix@${{ vars.SSH_HOST }} "ls"
+      run: ssh radix@nms.radixcloud.com "ls"
     - name: cleanup
       run: rm -rf ~/.ssh
