@@ -11,18 +11,13 @@ jobs:
         steps:
 
             - name: Add SSH key
-              env:
-                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-              run: |
-                  mkdir -p /home/runner/.ssh
-                  # Replace example.com with the hostname of the machine
-                  # you're SSH-ing into
-                  ssh-keyscan nms.radixcloud.com >> /home/runner/.ssh/known_hosts
-                  # DOKKU_SSH_KEY is the name of the repository secret
-                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
-                  chmod 600 /home/runner/.ssh/github_actions
-                  ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
-                  ssh-add /home/runner/.ssh/github_actions
-                  ssh radix@nms.radixcloud.com "ls"
+              uses: appleboy/ssh-action@master
+              with:
+                host: nms.radixcloud.com
+                username: radix
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                            ls
+ 
 
          
