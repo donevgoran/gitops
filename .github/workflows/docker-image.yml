@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - run: apt install libssl-dev -y
       - run: mkdir -p ~/.ssh/
       - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private.key
       - run: chmod 600 ~/.ssh/private.key
