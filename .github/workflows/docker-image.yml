@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          apt update -y 
-          apt install openssh rsync
+          sudo apt update -y 
+          sudo apt install openssh rsync -y
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -t rsa nms.radixcloud.com >> ~/.ssh/known_hosts
