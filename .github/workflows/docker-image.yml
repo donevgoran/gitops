@@ -16,7 +16,7 @@ jobs:
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ vars.SSH_KEYS }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ vars.SSH_HOST }} > ~/.ssh/known_hosts
+        ssh-keyscan -H nms.radixcloud.com > ~/.ssh/known_hosts
     - name: connect and pull
       run: ssh radix@${{ vars.SSH_HOST }} "ls"
     - name: cleanup
