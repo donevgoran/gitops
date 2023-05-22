@@ -9,7 +9,7 @@ jobs:
       - name: Create SSH key
         run: |
           sudo apt update -y 
-          sudo apt install openssh rsync -y
+          sudo apt install openssh-client rsync -y
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan -t rsa nms.radixcloud.com >> ~/.ssh/known_hosts
