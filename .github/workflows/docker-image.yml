@@ -20,6 +20,6 @@ jobs:
          echo "nms.radixcloud.com" > ~/.ssh/known_hosts
       shell: bash
     - name: connect and pull
-      run: ssh -i ~/.ssh/private.key radix@nms.radixcloud.com "ls"
+      run: ssh -i ~/.ssh/private.key -o UserKnownHostsFile=~/.ssh/known_hosts radix@nms.radixcloud.com "ls"
     - name: cleanup
       run: rm -rf ~/.ssh
